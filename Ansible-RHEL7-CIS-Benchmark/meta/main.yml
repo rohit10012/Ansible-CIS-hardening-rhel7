@@ -1,18 +1,19 @@
 galaxy_info:
-	  author: "Jayanti Dutta, Rohit Sharma"
-	  description: "Apply RHEL 7 CIS Baseline"
-	
-	  min_ansible_version: 2.5
-	
-	  platforms:
-	    - name: EL
-	      versions:
-	        - 7
-	
-	  galaxy_tags:
-	    - system
-	    - security
-	    - cis
-	    - hardening
-	
-	dependencies: []
+  author: "Jayanti Dutta, Rohit Kumar Sharma"
+  description: "Apply RHEL 7 CIS Baseline"
+  company: "Ericsson India Global ltd"
+  license: N/A
+  min_ansible_version: 2.5
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+
+  galaxy_tags:
+    - system
+    - security
+    - cis
+    - hardening
+
+dependencies: []
