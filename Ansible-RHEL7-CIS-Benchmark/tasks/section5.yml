@@ -1,0 +1,885 @@
+- name: "SCORED | 5.1.1 | PATCH | Ensure cron daemon is enabled"
+  service:
+      name: crond
+      state: started
+      enabled: yes
+
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+      - level1
+      - patch
+      - rule_5.1.1
+
+- name: "SCORED | 5.1.2 | PATCH | Ensure permissions on /etc/crontab are configured"
+  file:
+      dest: /etc/crontab
+      owner: root
+      group: root
+      mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+      - level1
+      - patch
+      - rule_5.1.2
+
+- name: "SCORED | 5.1.3 | PATCH | Ensure permissions on /etc/cron.hourly are configured"
+  file:
+      dest: /etc/cron.hourly
+      owner: root
+      group: root
+      mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.3
+
+- name: "SCORED | 5.1.4 | PATCH | Ensure permissions on /etc/cron.daily are configured"
+  file:
+      dest: /etc/cron.daily
+      owner: root
+      group: root
+      mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.4
+
+- name: "SCORED | 5.1.5 | PATCH | Ensure permissions on /etc/cron.weekly are configured"
+  file:
+      dest: /etc/cron.weekly
+      owner: root
+      group: root
+      mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.5
+
+- name: "SCORED | 5.1.6 | PATCH | Ensure permissions on /etc/cron.monthly are configured"
+  file:
+      dest: /etc/cron.monthly
+      owner: root
+      group: root
+      mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.6
+
+- name: "SCORED | 5.1.7 | PATCH | Ensure permissions on /etc/cron.d are configured"
+  file:
+      dest: /etc/cron.d
+      state: directory
+      owner: root
+      group: root
+      mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.7
+
+- name: "SCORED | 5.1.8 | PATCH | Ensure at/cron is restricted to authorized users"
+  file:
+      dest: /etc/at.deny
+      state: absent
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.8
+
+- name: "SCORED | 5.1.8 | PATCH | Ensure at/cron is restricted to authorized users"
+  file:
+      dest: /etc/at.allow
+      state: touch
+      owner: root
+      group: root
+      mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.8
+
+- name: "SCORED | 5.1.8 | PATCH | Ensure at/cron is restricted to authorized users"
+  file:
+    dest: /etc/cron.deny
+    state: absent
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.8
+
+- name: "SCORED | 5.1.8 | PATCH | Ensure at/cron is restricted to authorized users"
+  file:
+    dest: /etc/cron.allow
+    state: touch
+    owner: root
+    group: root
+    mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.1.8
+
+- name: "SCORED | 5.2.1 | PATCH | Ensure permissions on /etc/ssh/sshd_config are configured"
+  file:
+    dest: /etc/ssh/sshd_config
+    state: file
+    owner: root
+    group: root
+    mode: 0600
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.1
+
+- name: "SCORED | 5.2.2 | PATCH | Ensure SSH Protocol is set to 2"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^Protocol'
+    line: 'Protocol 2'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.2
+
+- name: "SCORED | 5.2.3 | PATCH | Ensure SSH LogLevel is set to INFO"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^LogLevel'
+    line: 'LogLevel INFO'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.3
+
+- name: "SCORED | 5.2.4 | PATCH | Ensure SSH X11 forwarding is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^X11Forwarding'
+    line: 'X11Forwarding no'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.4
+
+- name: "SCORED | 5.2.5 | PATCH | Ensure SSH MaxAuthTries is set to 4 or less"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#MaxAuthTries'
+    line: 'MaxAuthTries 4'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.5
+
+- name: "SCORED | 5.2.6 | PATCH | Ensure SSH IgnoreRhosts is enabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#IgnoreRhosts'
+    line: 'IgnoreRhosts yes'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.6
+
+- name: "SCORED | 5.2.7 | PATCH | Ensure SSH HostbasedAuthentication is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#HostbasedAuthentication'
+    line: 'HostbasedAuthentication no'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.7
+
+- name: "SCORED | 5.2.8 | PATCH | Ensure SSH root login is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#PermitRootLogin'
+    line: '#PermitRootLogin no'
+  when:
+    - centos7cis_permit_ssh_root_login_disabled is defined and centos7cis_permit_ssh_root_login_disabled
+  tags:
+    - level1
+    - patch
+    - rule_5.2.8
+
+- name: "SCORED | 5.2.9 | PATCH | Ensure SSH PermitEmptyPasswords is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#PermitEmptyPasswords'
+    line: 'PermitEmptyPasswords no'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.9
+
+- name: "SCORED | 5.2.10 | PATCH | Ensure SSH PermitUserEnvironment is disabled"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#PermitUserEnvironment'
+    line: 'PermitUserEnvironment no'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.10
+
+# Removed 5.2.11 from CIS Benchmark
+# - name: "SCORED | 5.2.11 | PATCH | Ensure only approved ciphers are used"
+#   lineinfile:
+#       state: present
+#       dest: /etc/ssh/sshd_config
+#       regexp: '^Ciphers'
+#       line: 'Ciphers aes128-ctr,aes192-ctr,aes256-ctr'
+#   tags:
+#       - level1
+#       - level2
+#       - medium
+#       - patch
+#       - rule_5.2.11
+
+- name: "SCORED | 5.2.11 | PATCH | Ensure only approved MAC algorithms are used"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    line: 'MACs {{ centos7cis_ssh_mac_algorithms }}'
+    create: yes
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_ssh_mac_algorithms is defined
+  tags:
+    - level1
+    - patch
+    - rule_5.2.11
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: absent
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveInterval (?!300)'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#ClientAliveInterval(.*)?$'
+    line: 'ClientAliveInterval 300'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: absent
+    dest: /etc/ssh/sshd_config
+    regexp: '^ClientAliveCountMax (?!0)'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.12 | PATCH | Ensure SSH Idle Timeout Interval is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#ClientAliveCountMax(.*)?$'
+    line: 'ClientAliveCountMax 0'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.12
+
+- name: "SCORED | 5.2.13 | PATCH | Ensure SSH LoginGraceTime is set to one minute or less"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#LoginGraceTime'
+    line: 'LoginGraceTime 60'
+  notify:
+    - restart sshd
+
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.2.13
+
+- name: "SCORED | 5.2.14 | PATCH | Ensure SSH access is limited"
+  block:
+      - name: "SCORED | 5.2.14 | PATCH | Ensure SSH access is limited - allowusers"
+        lineinfile:
+            state: present
+            dest: /etc/ssh/sshd_config
+            regexp: "(?i)^AllowUsers"
+            line: AllowUsers {{ centos7cis_sshd['allowusers'] }}
+            validate: /usr/sbin/sshd -t -f %s
+        notify:
+            - restart sshd
+        when:
+            - centos7cis_sshd['allowusers'] | default('')
+            - centos7cis_ssh_access_limited is defined and centos7cis_ssh_access_limited
+            - centos7cis_level1 is defined and centos7cis_level1
+        tags:
+            - level1
+            - patch
+            - rule_5.2.14
+
+      - name: "SCORED | 5.2.14 | PATCH | Ensure SSH access is limited - allowgroups"
+        lineinfile:
+            state: present
+            dest: /etc/ssh/sshd_config
+            regexp: "(?i)^AllowGroups"
+            line: AllowGroups {{ centos7cis_sshd['allowgroups'] }}
+            validate: /usr/sbin/sshd -t -f %s
+        notify:
+            - restart sshd
+        when:
+            - centos7cis_sshd['allowgroups'] | default('')
+            - centos7cis_ssh_access_limited is defined and centos7cis_ssh_access_limited
+            - centos7cis_level1 is defined and centos7cis_level1
+        tags:
+            - level1
+            - patch
+            - rule_5.2.14
+
+      - name: "SCORED | 5.2.14 | PATCH | Ensure SSH access is limited - denyusers"
+        lineinfile:
+            state: present
+            dest: /etc/ssh/sshd_config
+            regexp: "(?i)^DenyUsers"
+            line: DenyUsers {{ centos7cis_sshd['denyusers'] }}
+            validate: /usr/sbin/sshd -t -f %s
+        notify:
+            - restart sshd
+        when:
+            - centos7cis_sshd['denyusers'] | default('')
+            - centos7cis_ssh_access_limited is defined and centos7cis_ssh_access_limited
+            - centos7cis_level1 is defined and centos7cis_level1
+        tags:
+            - level1
+            - patch
+            - rule_5.2.14
+
+
+      - name: "SCORED | 5.2.14 | PATCH | Ensure SSH access is limited - denygroups"
+        lineinfile:
+            state: present
+            dest: /etc/ssh/sshd_config
+            regexp: "(?i)^DenyGroups"
+            line: DenyGroups {{ centos7cis_sshd['denygroups'] }}
+            validate: /usr/sbin/sshd -t -f %s
+        notify:
+            - restart sshd
+        when:
+            - centos7cis_sshd['denygroups'] | default('')
+            - centos7cis_ssh_access_limited is defined and centos7cis_ssh_access_limited
+            - centos7cis_level1 is defined and centos7cis_level1
+        tags:
+            - level1
+            - patch
+            - rule_5.2.14
+
+- name: "SCORED | 5.2.15 | PATCH | Ensure SSH warning banner is configured"
+  lineinfile:
+    state: present
+    dest: /etc/ssh/sshd_config
+    regexp: '^#Banner'
+    line: 'Banner /etc/issue.net'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level
+    - patch
+    - rule_5.2.15
+
+- name: "SCORED | 5.3.1 | PATCH | Ensure password creation requirements are configured"
+  lineinfile:
+    state: present
+    dest: /etc/security/pwquality.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    create: yes
+  with_items:
+    - { regexp: "^#?minlen=", line: "minlen = {{ centos7cis_pwquality_minlen }}" }
+    - { regexp: "^#?dcredit=", line: "dcredit = {{ centos7cis_pwquality_dcredit }}" }
+    - { regexp: "^#?ucredit=", line: "ucredit = {{ centos7cis_pwquality_ucredit }}" }
+    - { regexp: "^#?ocredit=", line: "ocredit = {{ centos7cis_pwquality_ocredit }}" }
+    - { regexp: "^#?lcredit=", line: "lcredit = {{ centos7cis_pwquality_lcredit }}" }
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_creation_requirements is defined and centos7cis_password_creation_requirements 
+  tags:
+    - level1
+    - patch
+    - rule_5.3.1
+
+- name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured
+         SCORED | 5.3.3 | Ensure password reuse is limited - for password-auth and system-auth"
+  template:
+    src: 'templates/{{ item.src }}'
+    dest: '/etc/pam.d/{{ item.dest }}'
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  with_items:
+    - { src: 'password-auth-local.j2', dest: 'password-auth-local' }
+    - { src: 'system-auth-local.j2', dest: 'system-auth-local' }
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.3.2
+    - rule_5.3.3
+    - low
+
+- name: "SCORED | 5.3.2 | Ensure lockout for failed password attempts is configured
+         SCORED | 5.3.3 | Ensure password reuse is limited - Link password|system-auth-local to password|system-auth"
+  file:
+    src: '/etc/pam.d/{{ item.src }}'
+    dest: '/etc/pam.d/{{ item.dest }}'
+    owner: root
+    group: root
+    state: link
+  with_items:
+    - { src: 'password-auth-local', dest: 'password-auth' }
+    - { src: 'system-auth-local', dest: 'system-auth' }
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.3.2
+    - rule_5.3.3
+    - low
+
+
+- name: 'SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512 -  Check password hashing algorithm is SHA-512'
+  command: awk /sha512/ /etc/pam.d/password-auth
+  register: sha512_check
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+     - level1
+     - patch
+     - rule_5.3.4
+
+- name: 'SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512'
+  command: "authconfig --update --passalgo=sha512"
+  when: 
+    - sha512_check.stdout is undefined
+    - centos7cis_level1 is defined and centos7cis_level1
+  changed_when: false
+  tags:
+     - level1
+     - patch
+     - rule_5.3.4
+
+
+- name: 'SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512 - Ensure all password configuration is up to date'
+  command: "authconfig --updateall"
+  changed_when: false
+  when:
+    - sha512_check.stdout is undefined
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+     - level1
+     - patch
+     - rule_5.3.4
+
+- name: "SCORED | 5.4.1.1 | PATCH | Ensure password expiration is 365 days or less - Obtain a list of user accounts"
+  shell: "egrep ^[^:]+:[^\\!*] /etc/shadow | cut -d: -f1 |awk '{if(NR>1)print}'"
+  register: egrep_5_4_1_1
+  check_mode: no
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_expiration is defined and centos7cis_password_expiration
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.1
+    - skip_ansible_lint
+
+- name: "SCORED | 5.4.1.1 | PATCH | Ensure password expiration is 365 days or less"
+  lineinfile:
+    dest: "/etc/login.defs"
+    regexp: "^PASS_MAX_DAYS\\s+"
+    line: "PASS_MAX_DAYS {{ centos7_pass_max_days }}"
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_expiration is defined and centos7cis_password_expiration
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.1
+
+- name: "SCORED | 5.4.1.1 | PATCH | Ensure password expiration is 365 days or less - Set password expiration for all user accounts"
+  shell: "chage --maxdays {{ centos7_pass_max_days }} {{ item }}"
+  with_items:
+    - "{{ egrep_5_4_1_1.stdout_lines|default([]) }}"
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_expiration is defined and centos7cis_password_expiration
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.1
+    - skip_ansible_lint
+
+
+- name: "SCORED | 5.4.1.2 | PATCH | Ensure minimum days between password changes is 7 or more -  Obtain a list of user accounts"
+  shell: "egrep ^[^:]+:[^\\!*] /etc/shadow | cut -d: -f1 |awk '{if(NR>1)print}'"
+  register: egrep_5_4_1_2
+  check_mode: no
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_minimum_days_password_change is defined and centos7cis_password_minimum_days_password_change
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.2
+    - skip_ansible_lint
+
+- name: "SCORED | 5.4.1.2 | PATCH | Ensure minimum days between password changes is 7 or more"
+  lineinfile:
+      state: present
+      dest: /etc/login.defs
+      regexp: "^PASS_MIN_DAYS\\s+"
+      line: "PASS_MIN_DAYS {{ centos7_pass_min_days }}"
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_minimum_days_password_change is defined and centos7cis_password_minimum_days_password_change
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.2
+
+- name: "SCORED | 5.4.1.2 | PATCH | Ensure minimum days between password changes is 7 or more - Set minimum number of days between password change for all user accounts"
+  shell: "chage --mindays {{ centos7_pass_min_days }} {{ item }}"
+  with_items:
+    - "{{ egrep_5_4_1_2.stdout_lines|default([]) }}"
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_minimum_days_password_change is defined and centos7cis_password_minimum_days_password_change
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.2
+    - skip_ansible_lint
+
+- name: "SCORED | 5.4.1.3 | PATCH | Ensure password expiration warning days is 7 or more - Obtain a list of user accounts"
+  shell: "egrep ^[^:]+:[^\\!*] /etc/shadow | cut -d: -f1 |awk '{if(NR>1)print}'"
+  register: egrep_5_4_1_3
+  check_mode: no
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_expiration_warning is defined and centos7cis_password_expiration_warning
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.3
+
+- name: "SCORED | 5.4.1.3 | PATCH | Ensure password expiration warning days is 7 or more"
+  lineinfile:
+      state: present
+      dest: /etc/login.defs
+      regexp: "^PASS_WARN_AGE\\s+"
+      line: "PASS_WARN_AGE {{ centos7_pass_warn_days }}"
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_expiration_warning is defined and centos7cis_password_expiration_warning
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.3
+
+- name: "SCORED | 5.4.1.3 | PATCH | Ensure password expiration warning days is 7 or more - Set password expiration warning for all user accounts"
+  shell: "chage --warndays {{ centos7_pass_warn_days }} {{ item }}"
+  with_items:
+    - "{{ egrep_5_4_1_3.stdout_lines|default([]) }}"
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_password_expiration_warning is defined and centos7cis_password_expiration_warning
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.3
+    - skip_ansible_lint
+
+
+- name: "SCORED | 5.4.1.4 | PATCH | Ensure inactive password lock is 30 days or less - Obtain a list of user accounts"
+  shell: "egrep ^[^:]+:[^\\!*] /etc/shadow | cut -d: -f1 |awk '{if(NR>1)print}'"
+  register: egrep_5_4_1_4
+  check_mode: no
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_inactive_password_lock is defined and centos7cis_inactive_password_lock
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.4
+    - skip_ansible_lint
+ 
+- name: "SCORED | 5.4.1.4 | PATCH | Ensure inactive password lock is 30 days or less - Set the default password inactivity period to 30 days"
+  command: useradd -D -f 30
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_inactive_password_lock is defined and centos7cis_inactive_password_lock
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.4
+    - low
+
+- name: "SCORED | 5.4.1.4 | PATCH | Ensure inactive password lock is 30 days or less - Set inactive password lock for all user accounts"
+  shell: "chage --inactive {{ centos7cis_inactive_pass_lck }} {{ item }}"
+  with_items:
+    - "{{ egrep_5_4_1_4.stdout_lines|default([]) }}"
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_inactive_password_lock is defined and centos7cis_inactive_password_lock
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.4
+    - skip_ansible_lint
+
+
+- name: "SCORED | 5.4.1.5 | Ensure all users last password change date is in the past (Scored)"
+  debug:
+    msg: 'Confirm all password change dates are in the past.'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.4.1.5
+    - low
+
+- name: "SCORED | 5.4.2 | PATCH | Ensure system accounts are non-login"
+  shell: "awk -F: '($3 < {{ centos7cis_rule_5_4_2_min_uid }}) {print $1 }' /etc/passwd"
+  changed_when: no
+  check_mode: no
+  register: system_account
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_ensure_system_accounts_are_non_login is defined and centos7cis_ensure_system_accounts_are_non_login
+  tags:
+    - level1
+    - patch
+    - rule_5.4.2
+    - low
+
+- name: "SCORED | 5.4.2 | PATCH | Ensure system accounts are non-login"
+  user:
+      name: "{{ item }}"
+      password_lock: true
+  with_items:
+      - "{{ system_account.stdout_lines }}"
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_ensure_system_accounts_are_non_login is defined and centos7cis_ensure_system_accounts_are_non_login
+    - item != "root"
+  tags:
+    - level1
+    - patch
+    - rule_5.4.2
+    - low
+
+- name: "SCORED | 5.4.3 | PATCH | Ensure default group for the root account is GID 0"
+  command: usermod -g 0 root
+  changed_when: false
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+  tags:
+    - level1
+    - patch
+    - rule_5.4.3
+
+- name: "SCORED | 5.4.4 | PATCH | Ensure default user umask is 027 or more restrictive"
+  lineinfile:
+    state: present
+    regexp: "^umask\\s+"
+    line: "umask {{ centos7cis_umask_default }}"
+    dest: "{{ item }}"
+  with_items: "{{ centos7cis_umask_shell_files }}"
+  ignore_errors: yes
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_modify_default_user_umask is defined and centos7cis_modify_default_user_umask
+  tags:
+    - level1
+    - patch
+    - rule_5.4.4
+    - low
+
+- name: "SCORED | 5.4.4 | PATCH | Ensure default user umask is 027 or more restrictive - Obtain the list of .sh files from /etc/profile.d"
+  find:
+    paths: /etc/profile.d
+    file_type: file
+    recurse: Yes
+    patterns: "*.sh"
+  register: files_matched
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_modify_default_user_umask is defined and centos7cis_modify_default_user_umask
+  tags:
+    - level1
+    - patch
+    - rule_5.4.4
+    - low
+
+
+- name: "SCORED | 5.4.4 | PATCH | Ensure default user umask is 027 or more restrictive - Setting the umask in .sh files present in /etc/profile.d"
+  lineinfile:
+    state: present
+    regexp: "^umask\\s+"
+    insertafter: EOF
+    line: "umask {{ centos7cis_umask_default }}"
+    path: "{{ item.path }}"
+    create: yes
+  loop: "{{ files_matched.files|flatten(levels=1) }}"
+  loop_control:
+    label: "{{ item.path }}"
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_modify_default_user_umask is defined and centos7cis_modify_default_user_umask
+  tags:
+    - level1
+    - patch
+    - rule_5.4.4
+    - low
+
+
+- name: "SCORED | 5.4.5 | PATCH | Ensure default user shell timeout is 900 seconds or less"
+  lineinfile:
+    state: present
+    dest: /etc/bashrc
+    regexp: '^TMOUT'
+    line: 'TMOUT=600'
+  when:
+    - centos7cis_level2 is defined and centos7cis_level2
+  tags:
+    - level2
+    - patch
+    - rule_5.4.5
+    - low
+
+- name: "SCORED | 5.4.5 | PATCH | Ensure default user shell timeout is 900 seconds or less"
+  lineinfile:
+    state: present
+    dest: /etc/profile
+    regexp: '^TMOUT'
+    line: 'TMOUT=600'
+  when:
+    - centos7cis_level2 is defined and centos7cis_level2
+  tags:
+    - level2
+    - patch
+    - rule_5.4.5
+    - low
+
+- name: "SCORED | 5.6 | PATCH | Ensure access to the su command is restricted -  Configure wheel group members who can access the su command"
+  lineinfile:
+    state: present
+    dest: /etc/group
+    regexp: '^wheel:x:10:(.*)$'
+    line: 'wheel:x:10:{{ centos7cis_wheel_group_members }}'
+    backrefs: yes
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_access_su_restricted is defined and centos7cis_access_su_restricted
+  tags:
+    - level1
+    - patch
+    - rule_5.6
+    - low
+
+- name: "SCORED | 5.6 | PATCH | Ensure access to the su command is restricted"
+  lineinfile:
+    state: present
+    dest: /etc/pam.d/su
+    regexp: '^#auth\s+required\s+pam_wheel\.so'
+    line: 'auth           required        pam_wheel.so use_uid'
+  when:
+    - centos7cis_level1 is defined and centos7cis_level1
+    - centos7cis_access_su_restricted is defined and centos7cis_access_su_restricted
+  tags:
+    - level1
+    - patch
+    - rule_5.6

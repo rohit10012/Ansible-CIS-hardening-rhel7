@@ -1,0 +1,312 @@
+---
+# defaults file for CentOS7-CIS
+
+# Define what sections to run
+centos7cis_notauto: false
+#1-Initial-Setup
+centos7cis_section1: true
+#2-Services
+centos7cis_section2: true
+#3-Network-Configuration
+centos7cis_section3: true
+#4-Logging-and-Auditing
+centos7cis_section4: true
+#5-Access, Authentication and Authorization
+centos7cis_section5: true
+#6-System-Maintenance
+centos7cis_section6: true
+
+# Whether to fail when remediation items are found for recommendations which can't be automatically fixed.
+# If false, a debug message will be generated instead, with the preface *** ACTION REQUIRED ***..
+centos7cis_fail_on_manual_remediation_actions: false  # True or false.
+
+# Set to true to run either level1, level2, or set both to true to run level1 and level2 checks.
+centos7cis_level1: true
+centos7cis_level2: true
+
+############################
+### Section 1 Parameters ###
+############################
+
+# Section AIDE #
+
+# Section 1.3.1 | Ensure AIDE is installed and configured
+centos7cis_config_aide: false
+
+# Section 1.3.2 | Ensure filestystem integrity is regularly checked | AIDE cron settings
+centos7cis_aide_cron:
+  cron_user: root
+  cron_file: /etc/crontab
+  aide_job: '/usr/sbin/aide --check'
+  aide_minute: 0
+  aide_hour: 5
+  aide_day: '*'
+  aide_month: '*'
+  aide_weekday: '*'
+
+# 1.4.2 Bootloader password
+##bootLOADER PASSWORD MOVED TO VAR_PROMPT
+centos7cis_bootloader_password: random
+centos7cis_set_boot_pass: false
+
+# SELinux Section #
+# Section 1.6.1.2 & 1.6.1.3 | Ensure SELinux state is enforcing and configured
+# true = SELinux is disabled | false = SELinux is enabled
+centos7cis_selinux_disable: false
+
+# Section 1.6.1.2 & 1.6.1.3 | SELinux policy
+centos7cis_selinux_pol: targeted
+
+# MOTD Section #
+# Section 1.7.1.1 | Ensure message of the day is configured properly
+# Warning Banner Content (issue, issue.net, motd)
+centos7cis_warning_banner: |
+    Authorized uses only. All activity may be monitored and reported.
+
+# End Banner
+
+# System package updates #
+
+# Section 1.8 | Ensure updates of software repos and system packages are up-to-date | Run yum update
+# true = yum update is enabled | false = yum update is disabled
+centos7cis_update: false
+
+############################
+### Section 2 Parameters ###
+############################
+# Set this to false to prevent disabling of services.
+# Value of true will disable all services listed below not set to true.
+# Value of false will skip the disabling of services listed below.
+# The disable_service_checks can also be enabled via the skip tag function by skipping "disable_service_checks" tag to the running playbook
+centos7cis_disable_service_checks: true
+
+# Set this value to true if the machine is joined to AD/LDAP server.
+# Set this value to false if the machine is not joined to AD/LDAP server.
+centos7cis_ad_ldap_joined_machine: true
+
+# Service configuration booleans set true to keep service
+centos7cis_cups_server: false
+centos7cis_dhcp_server: false
+centos7cis_ldap_server: false
+centos7cis_telnet_server: false
+centos7cis_nfs_server: false
+centos7cis_rpc_server: false
+centos7cis_ntalk_server: false
+centos7cis_rsyncd_server: false
+centos7cis_tftp_server: false
+centos7cis_rsh_server: false
+centos7cis_nis_server: false
+centos7cis_snmp_server: false
+centos7cis_squid_server: false
+centos7cis_smb_server: false
+centos7cis_dovecot_server: false
+centos7cis_httpd_server: false
+centos7cis_vsftpd_server: false
+centos7cis_named_server: false
+centos7cis_nfs_rpc_server: false
+centos7cis_is_mail_server: false
+centos7cis_bind: false
+centos7cis_vsftpd: false
+centos7cis_httpd: false
+centos7cis_dovecot: false
+centos7cis_samba: false
+centos7cis_squid: false
+centos7cis_net_snmp: false
+centos7cis_allow_autofs: false
+
+centos7cis_openldap_clients_required: false
+centos7cis_telnet_required: false
+centos7cis_talk_required: false
+centos7cis_rsh_required: false
+centos7cis_ypbind_required: false
+
+# Section 2.1.11 | Ensure xinetd is not enabled
+# xinetd required
+centos7cis_xinetd_required: false
+
+# RedHat Satellite Subscription items
+centos7cis_rhnsd_required: false
+
+# Section 2.2.1.x | Time synchronization #
+# Time Synchronization - Use chrony or ntp(d)
+centos7cis_time_synchronization: chrony
+#centos7cis_time_Synchronization: ntp
+
+centos7cis_time_synchronization_servers:
+    - 0.pool.ntp.org
+    - 1.pool.ntp.org
+    - 2.pool.ntp.org
+    - 3.pool.ntp.org
+
+# Section 2.2.2 | Ensure X Window System is not installed
+# Set to 'true' if X Windows is needed in your environment
+centos7cis_xwindows_required: false
+
+# Section 2.2.3 | Ensure avahi server is not enabled
+centos7cis_avahi_server: false
+
+############################
+### Section 3 Parameters ###
+############################
+
+# Section 3.1.1 & 3.1.2 | Ensure IP forwarding is disabled and Ensure packet redirect sending is disabled
+# These rules can only be configured on non-host and router configurations
+
+# System network parameters (host only OR host and router)
+# if host only = false OR host and router = true
+centos7cis_is_router: false
+
+# 3.4.2 | PATCH | Ensure /etc/hosts.allow is configured
+centos7cis_host_allow:
+    - "10.0.0.0/255.0.0.0"
+    - "172.16.0.0/255.240.0.0"
+    - "192.168.0.0/255.255.0.0"
+
+# 3.4.3 | Ensure /etc/hosts.deny is configured
+centos7cis_enable_hosts_deny: false
+
+# Section 3.6.1 | Ensure iptables is installed
+# Selection of firewall package to use below | default: iptables
+#iptables OR firewalld
+centos7cis_firewall: firewalld
+#centos7cis_firewall: iptables
+
+
+# Section 3.6.2 | Ensure default deny firewall policy
+centos7cis_firewall_default_deny_rule: false
+# Section 3.6.3 | Ensure loopback traffic is configured
+centos7cis_firewall_loopback_rule: true
+# Section 3.6.4 | Ensure outbound and established connections are configured
+centos7cis_firewall_outbound_rule: true
+
+############################
+### Section 4 Parameters ###
+############################
+
+# 4.1.2 - Enable auditd
+centos7cis_enable_auditd: true
+
+centos7cis_sudolog: /var/log/secure
+
+# System Accounting and Logging
+# Set logging service to 'true'
+centos7cis_log_server: true
+
+# Enable system auditing | Select rsyslog or syslog_ng from the settings below #
+# rsyslog settings are sections 4.2.1.x
+# syslog_ng settings are sections 4.2.2.x
+
+# Section 4.2.1.x | rsyslog settings
+# IF using rsyslog, set to true and loghost_address should be reflected here
+centos7cis_rsyslog: true
+centos7cis_rsyslog_loghost_address: 10.14.210.243
+
+# Section 4.2.2.x | syslog_ng settings
+# IF using syslog_ng, set to true and loghost_address should be reflected here
+centos7cis_syslog_ng: true
+centos7cis_syslog_ng_loghost_address: 10.14.210.243
+
+############################
+### Section 5 Parameters ###
+############################
+
+# Section 5.2.9 | Ensure SSH root login is disabled
+centos7cis_permit_ssh_root_login_disabled: true
+
+# Section 5.2.11 | Ensure only strong MAC algorithms are used
+centos7cis_ssh_mac_algorithms: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
+
+# Section 5.2.14 | Ensure SSH access is limited
+centos7cis_ssh_access_limited: true
+# Make sure you understand the precedence when working with these values!!
+centos7cis_sshd:
+     allowusers: root jayanti admin1 admin3 admin5 admin7 admin9
+     allowgroups: root jayanti admin1 admin3 admin5 admin7 admin9
+     denyusers: admin2 admin4 admin6 
+     denygroups: admin10
+
+# Section 5.3.1 | Ensure password creation requirements are configured
+centos7cis_password_creation_requirements: true
+# Minimum number of characters required for passwords
+centos7cis_pwquality_minlen: "14"
+# At least one digit must be provided
+centos7cis_pwquality_dcredit: "-1"
+# At least one uppercase character must be provided
+centos7cis_pwquality_ucredit: "-1"
+# At least one special character must be provided
+centos7cis_pwquality_ocredit: "-1"
+# At least one lowercase character must be provided
+centos7cis_pwquality_lcredit: "-1"
+
+# Section 5.3.2 | Ensure lockout for failed password attempts is configured
+# Number of failed login attempts before account locked
+centos7cis_pwfailed_attempts: "5"
+
+# Time in seconds before the login attempt can be tried again without auto failing
+centos7cis_pwunlock_time: "900"
+
+# Section 5.3.3 | Ensure password reuse is limited
+# Number of times a password can be attempted before sending back a failure
+centos7cis_pwretry_number: "3"
+
+# Ensure password reuse is limited to this number
+centos7cis_pwreuse_number: "5"
+
+# Options are sha512 or md5
+centos7cis_passwd_hash: "sha512"
+
+# Section 5.4.1.1 | Ensure password expiration is 365 days or less
+centos7cis_password_expiration: true
+centos7_pass_max_days: 90
+
+# Section 5.4.1.2 | Ensure minimum days between password changes is 7 or more
+centos7cis_password_minimum_days_password_change: true
+centos7_pass_min_days: 7
+
+# Section 5.4.1.3 | Ensure password expiration warning days is 7 or more
+centos7_pass_warn_days: 7
+centos7cis_password_expiration_warning: true
+
+# Section 5.4.1.4 | Ensure inactive password lock is 30 days or less
+centos7cis_inactive_password_lock: true
+centos7cis_inactive_pass_lck: 30 
+
+# Section 5.4.2 | Ensure system accounts are non-login
+centos7cis_ensure_system_accounts_are_non_login: true
+centos7cis_rule_5_4_2_min_uid: 1000
+
+# Section 5.4.4 | Ensure default user umask is 027 or more restrictive
+centos7cis_modify_default_user_umask: true
+centos7cis_umask_default: "027"
+centos7cis_umask_shell_files:
+                      - /etc/bashrc
+                      - /etc/profile
+
+# Section 5.6 Ensure access to the su command is restricted
+centos7cis_access_su_restricted: true
+centos7cis_wheel_group_members: "root"
+
+############################
+### Section 6 Parameters ###
+############################
+
+# Section 6.2.8 | Ensure users' home directory permissions are 750 or more restrictive
+centos7cis_modify_user_homes: true
+
+# Section 6.2.11 | Ensure no users have .forward files
+# Set false to keep .forward files
+centos7cis_modify_dot_forward_files: true
+
+# Section 6.2.12 | Ensure no users have .netrc files
+# Set false to keep .netrc files 
+centos7cis_modify_dot_netrc_files: true
+
+# Section 6.2.14 | Ensure no users have .rhosts files
+# Set false to keep .rhosts files
+centos7cis_modify_dot_rhosts_files: true
+
+centos7cis_vartmp:
+    source: /tmp
+    fstype: none
+    opts: "defaults, nodev, nosuid, noexec, bind"
+    enabled: false
